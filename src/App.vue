@@ -20,7 +20,7 @@ const navigation = [
     </main>
 
     <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 pb-safe">
+    <nav v-if="route.name !== 'login'" class="fixed bottom-0 w-full bg-white border-t border-gray-200 pb-safe">
       <div class="flex justify-around items-center h-16">
         <RouterLink 
           v-for="item in navigation" 

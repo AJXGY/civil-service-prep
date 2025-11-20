@@ -47,6 +47,32 @@ export const useExamStore = defineStore('exam', () => {
         userSettings.value = { ...userSettings.value, ...newSettings }
     }
 
+    // Auth State
+    const isAuthenticated = ref(false)
+    const hasPassword = computed(() => !!userSettings.value.password)
+
+    function login(password) {
+        if (userSettings.value.password === password) {
+            isAuthenticated.value = true
+            return true
+        }
+        return false
+    }
+
+    function setPassword(password) {
+        userSettings.value.password = password
+        isAuthenticated.value = true // Auto login after setting
+    }
+
+    function removePassword() {
+        delete userSettings.value.password
+        isAuthenticated.value = false
+    }
+
+    function logout() {
+        isAuthenticated.value = false
+    }
+
     // --- Persistence ---
     // Load from localStorage on init
     const storedSettings = localStorage.getItem('exam_settings')
@@ -73,8 +99,14 @@ export const useExamStore = defineStore('exam', () => {
         records,
         daysUntilExam,
         recentRecords,
+        isAuthenticated,
+        hasPassword,
         addRecord,
         deleteRecord,
-        updateSettings
+        updateSettings,
+        login,
+        setPassword,
+        removePassword,
+        logout
     }
 })
